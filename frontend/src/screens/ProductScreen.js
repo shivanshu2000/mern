@@ -20,6 +20,7 @@ import { listProductDetails } from "../actions/productActions";
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
+
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -34,6 +35,8 @@ const ProductScreen = ({ history, match }) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
+  // console.log(product._id !== match.params.id);
+
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -42,14 +45,16 @@ const ProductScreen = ({ history, match }) => {
 
       {loading ? (
         <Loader />
+      ) : product._id !== match.params.id ? (
+        <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <Row>
-          <Col lg={6}>
-            <Image fluid src={product.image} alt={product.name} />
+          <Col lg md={8}>
+            <Image fluid rounded src={product.image} alt={product.name} />
           </Col>
-          <Col lg={3}>
+          <Col lg>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{product.name}</h3>
@@ -69,7 +74,7 @@ const ProductScreen = ({ history, match }) => {
             </ListGroup>
           </Col>
 
-          <Col lg={3}>
+          <Col lg>
             <Card>
               <ListGroup>
                 <ListGroup.Item>

@@ -9,9 +9,9 @@ import {
   Image,
   Form,
   Button,
-  Cart,
+  Card,
 } from "react-bootstrap";
-import { addToCart } from "../actions/cartAction";
+import { addToCart, removeFromCart } from "../actions/cartAction";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -28,12 +28,17 @@ const CartScreen = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log("removed");
+    dispatch(removeFromCart(id));
+  };
+
+  const checkOutHandler = () => {
+    console.log("checkout");
+    history.push("/login?redirect=shipping");
   };
 
   return (
     <Row>
-      <Col lg={9} md={12}>
+      <Col lg={8}>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
@@ -53,10 +58,10 @@ const CartScreen = ({ match, location, history }) => {
                   </Col>
 
                   <Col md={2} className="py-2 py-md-0">
-                    {item.price}
+                    ${item.price}
                   </Col>
 
-                  <Col xs={6} sm={7} md={2}>
+                  <Col xs={6} sm={7} md={3}>
                     <Form.Control
                       as="select"
                       value={item.qty}
@@ -88,6 +93,34 @@ const CartScreen = ({ match, location, history }) => {
             ))}
           </ListGroup>
         )}
+      </Col>
+
+      <Col lg={4} className="mt-md-4">
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <h2 style={{ fontSize: "1.2em" }}>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </h2>
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <Button
+                type="button"
+                className="btn-block"
+                disabled={cartItems.length === 0}
+                onClick={checkOutHandler}
+              >
+                Proceed To Checout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
       </Col>
     </Row>
   );

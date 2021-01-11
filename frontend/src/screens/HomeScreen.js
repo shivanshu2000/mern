@@ -27,9 +27,9 @@ const HomeScreen = () => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
+        <Row className="d-flex justify-content-center">
           {products.map((product) => (
-            <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
+            <Col xs={12} sm={6} md={4} lg={3} key={product._id}>
               <Product product={product} />
             </Col>
           ))}
