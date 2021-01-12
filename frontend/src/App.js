@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import UserListScreen from "./screens/UserListScreen";
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,8 @@ const App = () => {
           <Route path="/profile" exact component={ProfileScreen} />
           <Route path="/product/:id" exact component={ProductScreen} />
           <Route path="/cart/:id?" exact component={CartScreen} />
+
+          <Route path="/admin/userList" exact component={UserListScreen} />
           <Route path="/" exact component={HomeScreen} />
         </Container>
       </main>

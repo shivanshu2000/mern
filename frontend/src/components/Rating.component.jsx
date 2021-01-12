@@ -13,6 +13,15 @@ const Rating = ({ value, text }) => {
     arrayLength.push("");
   }
 
+  let decimalNumber = isDecimal ? 1 : 0;
+
+  const emptyStarsLength = 5 - arrayLength.length - decimalNumber;
+  let emptyStarsArray = [];
+
+  for (let i = 0; i < emptyStarsLength; i++) {
+    emptyStarsArray.push("");
+  }
+
   return (
     <div className="rating">
       {arrayLength.map((rating) => (
@@ -26,6 +35,13 @@ const Rating = ({ value, text }) => {
           <i style={{ color: "#f8e825" }} className="fas fa-star-half-alt"></i>
         </span>
       ) : null}
+
+      {emptyStarsArray &&
+        emptyStarsArray.map((star) => (
+          <span key={Math.random().toString()}>
+            <i style={{ color: "#f8e825" }} className="far fa-star"></i>
+          </span>
+        ))}
 
       <span className="ml-1">{text && text}</span>
     </div>
